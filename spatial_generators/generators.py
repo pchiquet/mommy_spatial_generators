@@ -9,8 +9,8 @@ The default SRID being generated is 4326, corresponding to WGS84.
 The LineString and Polygon generators are harder do implement solely based on randomness.
 We might need to use regular polygon/linestring approach for them.
 """
-from random import randint, choice, random
-from django.contrib.gis.geos import Point
+from random import random
+from django.contrib.gis.geos import LinearRing, LineString, Point, Polygon
 from model_mommy.generators import gen_integer
 
 def gen_point(min_x=-180,
@@ -43,7 +43,7 @@ def gen_linestring(number_of_points=2,
                    srid=4326):
 
     """Generates a random linestring, based on random points. optional z and SRID."""
-    
+
     points = []
 
     for i in range(1, number_of_points + 1):
