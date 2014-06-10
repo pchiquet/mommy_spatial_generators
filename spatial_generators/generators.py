@@ -19,15 +19,19 @@ def gen_point(min_x=-180,
               max_y=90,
               min_z=None,
               max_z=None,
+              granularity=1000,
               srid=4326):
 
-    """Generates a random point with x, y, optional z and a SRID. Only coordinates are random, SRID is fixed by user."""
+    """
+    Generates a random point with x, y, optional z and a SRID. Only coordinates are random, SRID is fixed by user.
+    granularity specifies the precision of the generated coordinates (1000 by default for 0.001 as smallest diff).
+    """
 
-    x = random() * gen_integer(min_x, max_x)
-    y = random() * gen_integer(min_y, max_y)
+    x = gen_integer(int(min_x * granularity), int(max_x * granularity)) / float(granularity)
+    y = gen_integer(int(min_y * granularity), int(max_y * granularity)) / float(granularity)
 
     if min_z is not None and max_z is not None:
-        z = random() * gen_integer(min_z, max_z)
+        z = gen_integer(int(min_z * granularity), int(max_z * granularity)) / float(granularity)
         return Point(x=x, y=y, z=z, srid=srid)
 
     return Point(x=x, y=y, srid=srid)
